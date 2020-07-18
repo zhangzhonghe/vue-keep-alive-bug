@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <keep-alive>
+            <one v-if="toggle"></one>
+        </keep-alive>
+        <button onclick="clickBtn()">toggle</button>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.0.0-rc.1/vue.global.js"></script>
+    <script>
+        const { createApp, ref } = Vue
+        const one = {
+            name: 'one',
+            template: 'one',
+            created() {
+                console.log('created')
+            },
+            mounted() {
+                console.log('mounted')
+            },
+            activated() {
+                console.log('activated')
+            },
+            deactivated() {
+                console.log('deactivated')
+            },
+            destroyed() {
+                console.log('destroyed')
+            }
+        }
+
+        const toggle = ref(true)
+
+        const app = createApp({
+            data() {
+                return {
+                    toggle
+                }
+            },
+            components: {
+                One: one,
+            }
+        })
+        app.mount('#app')
+
+        function clickBtn() {
+            toggle.value = !toggle.value;
+        }
+    </script>
+</body>
+</html>
